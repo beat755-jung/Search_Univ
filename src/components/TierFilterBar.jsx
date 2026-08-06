@@ -1,9 +1,10 @@
 import { TIER_BADGE_CLASS, TIER_LABELS, TIER_FILTER_ORDER, TIER_TEXT_CLASS, tierBadgeContent } from '../utils/tiers'
 
-// 지도 상단에 표시되는 분류별 빠른 필터 바 (🎓 1차 필수 + 1~5 지역).
+// 지도 상단에 표시되는 분류별 빠른 필터 바 (🎓 1차 필수 4년제 + 🎓 1차 필수 전문대 + 1~5 지역).
 // 버튼을 누르면 해당 그룹의 모든 대학이 지도/카드에 추가로 표시(toggle)되고,
 // 현재 활성화된 그룹이 무엇인지 라벨로 옆에 표시된다. 라벨 색상은 tier 1~5는
-// 해당 버튼과 같은 색 글자로, tier 0(1차 필수)은 주황 배경+검정 글자 배지로 구분한다.
+// 해당 버튼과 같은 색 글자로, tier 0(1차 필수)은 주황 배경+검정 글자 배지, tier 6(1차
+// 필수 전문대)은 파란 배경+검정 글자 배지로 구분한다.
 export default function TierFilterBar({ universities, selectedIds, onToggleTier }) {
   const activeTiers = TIER_FILTER_ORDER.filter((tier) => {
     const tierUnivs = universities.filter((u) => u.tier === tier)
@@ -37,6 +38,13 @@ export default function TierFilterBar({ universities, selectedIds, onToggleTier 
               <span
                 key={tier}
                 className="text-[11px] font-semibold text-black bg-amber-400 rounded-full px-2 py-0.5 whitespace-nowrap"
+              >
+                {TIER_LABELS[tier]}
+              </span>
+            ) : tier === 6 ? (
+              <span
+                key={tier}
+                className="text-[11px] font-semibold text-black bg-blue-400 rounded-full px-2 py-0.5 whitespace-nowrap"
               >
                 {TIER_LABELS[tier]}
               </span>

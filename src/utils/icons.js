@@ -1,14 +1,14 @@
 import L from 'leaflet'
 
-// tier 0(1차 필수)~5 대학 마커 아이콘을 생성한다.
-// 각 테마는 6개 tier에 서로 뚜렷이 구분되는 색상(호그림이 아닌 서로 다른 계열)을
+// tier 0(1차 필수)~5, tier 6(1차 필수 전문대) 대학 마커 아이콘을 생성한다.
+// 각 테마는 7개 tier에 서로 뚜렷이 구분되는 색상(호그림이 아닌 서로 다른 계열)을
 // 배정한다 - 같은 계열의 명암 단계로는 지도에서 구분이 잘 안 되기 때문이다.
-// 인덱스: [tier0(학사모), tier1(서울 4년제), tier2(서울 전문대), tier3(경기남부), tier4(경기동부), tier5(인천)]
+// 인덱스: [tier0(학사모), tier1(서울 4년제), tier2(서울·경기 전문대), tier3(경기남부), tier4(경기동부), tier5(인천), tier6(전문대 학사모)]
 export const ICON_THEMES = {
-  vivid: ['#f59e0b', '#2563eb', '#e11d48', '#059669', '#ea580c', '#7c3aed'],
-  pastel: ['#fbbf24', '#60a5fa', '#fb7185', '#34d399', '#fb923c', '#a78bfa'],
-  dark: ['#b45309', '#1e40af', '#9f1239', '#065f46', '#9a3412', '#5b21b6'],
-  bright: ['#eab308', '#0ea5e9', '#f43f5e', '#22c55e', '#f97316', '#d946ef']
+  vivid: ['#f59e0b', '#2563eb', '#e11d48', '#059669', '#ea580c', '#7c3aed', '#3b82f6'],
+  pastel: ['#fbbf24', '#60a5fa', '#fb7185', '#34d399', '#fb923c', '#a78bfa', '#93c5fd'],
+  dark: ['#b45309', '#1e40af', '#9f1239', '#065f46', '#9a3412', '#5b21b6', '#1e3a8a'],
+  bright: ['#eab308', '#0ea5e9', '#f43f5e', '#22c55e', '#f97316', '#d946ef', '#38bdf8']
 }
 
 function escapeHtml(str) {
@@ -19,14 +19,14 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
 }
 
-// tier === 0 (1차 필수) 대학은 숫자 대신 학사모(🎓) 아이콘으로 표시하고,
+// tier === 0/6 (1차 필수, 1차 필수 전문대) 대학은 숫자 대신 학사모(🎓) 아이콘으로 표시하고,
 // 마커 위에 이름 라벨을 항상 함께 표시한다.
 export function buildUnivIcon(tier, theme = 'vivid', selected = false, name = '') {
   const palette = ICON_THEMES[theme] || ICON_THEMES.vivid
   const bg = palette[Math.min(Math.max(tier, 0), palette.length - 1)]
   const size = selected ? 34 : 28
   const ring = selected ? '0 0 0 4px rgba(58,102,245,0.25)' : '0 1px 4px rgba(0,0,0,0.35)'
-  const isCore = tier === 0
+  const isCore = tier === 0 || tier === 6
   const showLabel = isCore && name
   const labelHeight = showLabel ? 20 : 0
   const content = isCore ? '🎓' : String(tier)
