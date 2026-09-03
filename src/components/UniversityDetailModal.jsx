@@ -151,6 +151,35 @@ export default function UniversityDetailModal({
               항목과 모든 수치는 반드시 각 대학 입학처의 최신 공식 모집요강으로 재확인하세요.
             </p>
           </section>
+
+          {(university.admissionStats?.schedule2027 || university.admissionStats?.specialNotes2027) && (
+            <section>
+              <h3 className="text-sm font-semibold text-brand-700 mb-1">
+                2027학년도 수시 세부일정 및 특이사항
+              </h3>
+              {university.admissionStats.schedule2027 && (
+                <div className="bg-slate-50 rounded-lg p-2.5 text-sm text-slate-700 mb-2">
+                  {university.admissionStats.schedule2027}
+                </div>
+              )}
+              {university.admissionStats.specialNotes2027 && (
+                <ul className="space-y-1.5">
+                  {university.admissionStats.specialNotes2027.map((noteItem, idx) => (
+                    <li
+                      key={idx}
+                      className="bg-amber-50 rounded-lg p-2.5 text-sm text-amber-800 leading-relaxed"
+                    >
+                      {noteItem}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                ※ 지원자가 첨부한 공식 모집요강 PDF 원문 기준으로 정리했습니다. 매년 변경될 수 있으니
+                최신 모집요강으로 재확인하세요.
+              </p>
+            </section>
+          )}
         </div>
       </div>
     </div>
