@@ -3,8 +3,10 @@ import {
   APPLY_ORDER,
   CONCLUSIONS,
   CONFLICTS,
+  DAY_ORDER_GENERAL,
   EXAM_YEAR,
   PREP_STEPS,
+  SCHOOL_EXAM_NOTES,
   SCHOOLS,
   SOURCE_LABEL,
   SUNEUNG
@@ -143,6 +145,42 @@ export default function AdmissionScheduleGuide() {
           초록 배지 = 공식 요강 대조 완료 · 노랑 = 2차 자료만 확보 · 빨강 = 2026학년도 날짜로 대체.
           모든 일정은 각 대학 입학처 최종 공지가 우선합니다.
         </p>
+      </section>
+
+      <section>
+        <h3 className="text-sm font-semibold text-brand-700 mb-1.5">
+          실기 응시일 · 학교별 특징 (인터넷 후기 조사)
+        </h3>
+        <div className="bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-600 leading-relaxed mb-2">
+          <p className="font-semibold text-slate-700">{DAY_ORDER_GENERAL.title}</p>
+          <p className="mt-1">{DAY_ORDER_GENERAL.body}</p>
+          <p className="mt-1.5">
+            <strong>정리:</strong> {DAY_ORDER_GENERAL.takeaway}
+          </p>
+        </div>
+        <ul className="space-y-1.5">
+          {SCHOOL_EXAM_NOTES.map((s) => (
+            <li key={s.name} className="rounded-lg border border-slate-100 p-2.5 text-xs">
+              <p className="font-semibold text-slate-700">
+                {s.name}{' '}
+                <span
+                  className={`ml-1 inline-block rounded border px-1 py-0.5 text-[10px] font-medium align-middle ${SOURCE_CLASS[s.source]}`}
+                >
+                  {SOURCE_LABEL[s.source]}
+                </span>
+              </p>
+              <p className="mt-1 text-slate-600 leading-relaxed">
+                <strong>실기 구성:</strong> {s.format}
+              </p>
+              <p className="mt-1 text-slate-600 leading-relaxed">
+                <strong>응시일 의견:</strong> {s.dayOpinion}
+              </p>
+              <p className="mt-1 text-slate-600 leading-relaxed">
+                <strong>특이점:</strong> {s.quirk}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section>

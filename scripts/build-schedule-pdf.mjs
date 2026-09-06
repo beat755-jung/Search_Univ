@@ -14,8 +14,10 @@ import {
   APPLY_ORDER,
   CONCLUSIONS,
   CONFLICTS,
+  DAY_ORDER_GENERAL,
   EXAM_YEAR,
   PREP_STEPS,
+  SCHOOL_EXAM_NOTES,
   SCHOOLS,
   SOURCE_LABEL,
   SUNEUNG
@@ -89,6 +91,10 @@ const html = `<!doctype html>
   .foot { margin-top: 6mm; padding-top: 2mm; border-top: 1px solid #e2e8f0;
           color: #94a3b8; font-size: 7.5pt; }
   .pagebreak { page-break-before: always; }
+  .exam-note { border: 1px solid #e2e8f0; border-radius: 2mm; padding: 2.5mm 3mm;
+               margin-bottom: 2mm; page-break-inside: avoid; }
+  .exam-note p { margin: 0 0 1mm; }
+  .exam-note p:last-child { margin-bottom: 0; }
 </style></head><body>
 
 <h1>${EXAM_YEAR} 수시접수 및 실기 스케줄 전략</h1>
@@ -131,6 +137,21 @@ ${
   </tbody>
 </table>
 <p class="sub" style="margin-top:2mm">초록 배지 = 공식 요강 대조 완료 · 노랑 = 2차 자료만 확보 · 빨강 = 2026학년도 날짜로 대체. 모든 일정은 각 대학 입학처 최종 공지가 우선합니다.</p>
+
+<h2>실기 응시일 · 학교별 특징 (인터넷 후기 조사)</h2>
+<div class="banner info">
+  <p><strong>${esc(DAY_ORDER_GENERAL.title)}</strong></p>
+  <p>${esc(DAY_ORDER_GENERAL.body)}</p>
+  <p><strong>정리:</strong> ${esc(DAY_ORDER_GENERAL.takeaway)}</p>
+</div>
+${SCHOOL_EXAM_NOTES.map(
+  (s) => `<div class="exam-note">
+    <p><strong>${esc(s.name)}</strong> <span class="badge b-${s.source}">${SOURCE_LABEL[s.source]}</span></p>
+    <p><strong>실기 구성:</strong> ${esc(s.format)}</p>
+    <p><strong>응시일 의견:</strong> ${esc(s.dayOpinion)}</p>
+    <p><strong>특이점:</strong> ${esc(s.quirk)}</p>
+  </div>`
+).join('')}
 
 <h2>일정 충돌 지도</h2>
 ${CONFLICTS.map(
