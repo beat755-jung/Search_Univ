@@ -5,7 +5,13 @@ import { TIER_BADGE_CLASS, TIER_LABELS, TIER_FILTER_ORDER, TIER_TEXT_CLASS, tier
 // 현재 활성화된 그룹이 무엇인지 라벨로 옆에 표시된다. 라벨 색상은 tier 1~5는
 // 해당 버튼과 같은 색 글자로, tier 0(1차 필수)은 주황 배경+검정 글자 배지, tier 6(1차
 // 필수 전문대)은 파란 배경+검정 글자 배지로 구분한다.
-export default function TierFilterBar({ universities, selectedIds, onToggleTier }) {
+export default function TierFilterBar({
+  universities,
+  selectedIds,
+  onToggleTier,
+  onOpenApplicationGuide,
+  onOpenScheduleGuide
+}) {
   const activeTiers = TIER_FILTER_ORDER.filter((tier) => {
     const tierUnivs = universities.filter((u) => u.tier === tier)
     return tierUnivs.length > 0 && tierUnivs.every((u) => selectedIds.includes(u.id))
@@ -31,6 +37,22 @@ export default function TierFilterBar({ universities, selectedIds, onToggleTier 
           </button>
         )
       })}
+      <div className="flex items-center gap-1 pl-1.5 border-l border-slate-200 shrink-0">
+        <button
+          onClick={onOpenApplicationGuide}
+          title="수시 실기 원서접수 & 일정 전략 가이드"
+          className="w-8 h-8 rounded-full text-base flex items-center justify-center shrink-0 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+        >
+          📋
+        </button>
+        <button
+          onClick={onOpenScheduleGuide}
+          title="수시접수 및 실기 스케줄 전략"
+          className="w-8 h-8 rounded-full text-base flex items-center justify-center shrink-0 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
+        >
+          🗓️
+        </button>
+      </div>
       <div className="flex items-center gap-1 pl-1.5 pr-2 overflow-x-auto">
         {activeTiers.length > 0 ? (
           activeTiers.map((tier) =>

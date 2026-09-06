@@ -5,6 +5,9 @@ import MapControls from './components/MapControls'
 import TierFilterBar from './components/TierFilterBar'
 import BottomSheet from './components/BottomSheet'
 import UniversityDetailModal from './components/UniversityDetailModal'
+import GuideModal from './components/GuideModal'
+import AdmissionApplicationGuide from './components/guides/AdmissionApplicationGuide'
+import AdmissionScheduleGuide from './components/guides/AdmissionScheduleGuide'
 import universitiesData from './data/universities.json'
 import { DEFAULT_ORIGIN, geocodePlace } from './utils/geocode'
 import { buildKakaoMapRouteUrl } from './utils/kakao'
@@ -23,6 +26,7 @@ export default function App() {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
   const [zoomSignal, setZoomSignal] = useState(null)
   const [focusSignal, setFocusSignal] = useState(null)
+  const [activeGuide, setActiveGuide] = useState(null) // null | 'application' | 'schedule'
 
   const universities = universitiesData
 
@@ -133,6 +137,8 @@ export default function App() {
           universities={universities}
           selectedIds={selectedIds}
           onToggleTier={toggleTier}
+          onOpenApplicationGuide={() => setActiveGuide('application')}
+          onOpenScheduleGuide={() => setActiveGuide('schedule')}
         />
         <MapControls
           onZoomIn={() => setZoomSignal({ type: 'in', ts: Date.now() })}
@@ -175,6 +181,25 @@ export default function App() {
         onToggleFavorite={() => detailUniv && toggleFavorite(detailUniv.id)}
         onClose={() => setDetailUnivId(null)}
       />
+
+      {activeGuide === 'application' && (
+        <GuideModal
+          title="수시 실기 원서접수 & 일정 전략 가이드"
+          onClose={() => setActiveGuide(null)}
+        >
+          <AdmissionApplicationGuide />
+        </GuideModal>
+      )}
+
+      {activeGuide === 'schedule' && (
+        <GuideModal
+          title="수시접수 및 실기 스케줄 전략"
+          onClose={() => setActiveGuide(null)}
+          widthClass="max-w-[96vw] xl:max-w-6xl"
+        >
+          <AdmissionScheduleGuide />
+        </GuideModal>
+      )}
     </div>
   )
 }
