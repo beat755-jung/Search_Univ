@@ -117,6 +117,14 @@ export default function UniversityDetailModal({
             <h3 className="text-sm font-semibold text-brand-700 mb-1">입시 상세 통계</h3>
             {university.admissionStats ? (
               <dl className="space-y-2 text-sm">
+                {university.admissionStats.quota && (
+                  <div className="bg-brand-50 border border-brand-200 rounded-lg p-2.5">
+                    <dt className="text-[11px] font-medium text-brand-700">모집인원</dt>
+                    <dd className="text-brand-900 font-bold text-base mt-0.5 leading-snug">
+                      {university.admissionStats.quota}
+                    </dd>
+                  </div>
+                )}
                 <div className="bg-slate-50 rounded-lg p-2.5">
                   <dt className="text-[11px] font-medium text-slate-500">수시:정시 비율</dt>
                   <dd className="text-slate-700 mt-0.5">{university.admissionStats.ratio}</dd>
@@ -133,6 +141,16 @@ export default function UniversityDetailModal({
                   <dt className="text-[11px] font-medium text-slate-500">최근 경쟁률</dt>
                   <dd className="text-slate-700 mt-0.5">{university.admissionStats.competition}</dd>
                 </div>
+                {university.admissionStats.applicants2026 && (
+                  <div className="bg-slate-50 rounded-lg p-2.5">
+                    <dt className="text-[11px] font-medium text-slate-500">
+                      2026학년도 지원자수 · 경쟁률
+                    </dt>
+                    <dd className="text-slate-700 mt-0.5">
+                      {university.admissionStats.applicants2026}
+                    </dd>
+                  </div>
+                )}
                 <div className="bg-amber-50 rounded-lg p-2.5">
                   <dt className="text-[11px] font-medium text-amber-700">비고</dt>
                   <dd className="text-amber-800 mt-0.5">{university.admissionStats.note}</dd>
